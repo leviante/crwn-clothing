@@ -16,6 +16,7 @@ We want to make sure that our reducers are aware of what specific type of action
 payload = Not necessary, can be anything. Very flexible, can be used to change state
 
 */
+import { userActionTypes } from "../user/user.types";
 
 const INITIAL_STATE = {
   currentUser: null
@@ -23,7 +24,7 @@ const INITIAL_STATE = {
 
 const userReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case "SET_CURRENT_USER":
+    case userActionTypes.SET_CURRENT_USER:
       return {
         ...state,
         currentUser: action.payload
