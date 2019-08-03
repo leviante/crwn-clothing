@@ -8,16 +8,21 @@ import { createSelector } from "reselect";
 */
 
 //1. input
-const SelectCart = state => state.cart;
+const selectCart = state => state.cart;
 //a function that gets the whole state and returns a slice of it, one layer deep usually
 
 export const selectCartItems = createSelector(
   //takes 2 arg, first is a collection
-  [SelectCart],
+  [selectCart],
   //a func that return the value we want out of this selector
   cart => cart.cartItems
 );
 //selectCardItems is a memoi selector now
+
+export const selectCartHidden = createSelector(
+  [selectCart],
+  cart => cart.hidden
+);
 
 export const selectCartItemsCount = createSelector(
   [selectCartItems],
@@ -25,6 +30,16 @@ export const selectCartItemsCount = createSelector(
     cartItems.reduce(
       (accumulatedQuantity, cartItem) =>
         accumulatedQuantity + cartItem.quantity,
+      0
+    )
+);
+
+export const selectCartTotal = createSelector(
+  [selectCartItems],
+  cartItems =>
+    cartItems.reduce(
+      (accumulatedQuantity, cartItem) =>
+        accumulatedQuantity + cartItem.price * cartItem.quantity,
       0
     )
 );
