@@ -13,11 +13,19 @@ middleware that the store is expecting from redux is going to be an ARRAY - can 
 
 import { createStore, applyMiddleware } from "redux";
 import logger from "redux-logger";
+import { persistStore } from "redux-persist";
 
 import rootReducer from "./root-reducer";
 
 const middlewares = [logger];
 
-const store = createStore(rootReducer, applyMiddleware(...middlewares)); //gets rootReducer and returnvalue of applyMiddleware(...middlewares);
+export const store = createStore(rootReducer, applyMiddleware(...middlewares)); //gets rootReducer and returnvalue of applyMiddleware(...middlewares);
 
-export default store;
+
+/*
+Applying redux persist to save cart
+create a new persisted version of the store by using persistStore();
+*/
+export const persistor = persistStore(store);
+
+export default { store, persistor};

@@ -47,13 +47,13 @@ const Header = ({ currentUser, hidden }) => {
           </Link>
         )}
         <CartIcon />
-      </div>
-      {hidden ? null : <CartDropdown />}
+        </div>
+        {hidden ? null : <CartDropdown />}
     </div>
   );
 };
 
-//createStruc will get the state in background, no need to pass anything.
+//createStructuredSelector will get the state in background, no need to pass anything.
 const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser,
   hidden: selectCartHidden
