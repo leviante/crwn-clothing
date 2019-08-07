@@ -1,27 +1,27 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import {selectCollection } from "../../redux/shop/shop.selectors";
-
-import "./collection.styles.scss";
+import {selectCollection} from "../../redux/shop/shop.selectors";
 
 import CollectionItem from "../../components/collection-item/collection-item.component";
+
+//import styled components
+import {CollectionPageContainer, StyledTitle, ItemDiv } from "./collection.styles"
 
 //looks similar to collections preview, just with more items pulled from respective shop data
 const CollectionPage = ({collection}) => {
 //using match.params.collectionId, we want to select the appropriate data from the redux state and show the correct collection
-console.log(collection);
 const {title, items} = collection;
 
     return (
-    <div className="collection-page">
-        <h2 className="title">{ title }</h2>
-        <div className="items">
+    <CollectionPageContainer>
+        <StyledTitle>{ title }</StyledTitle>
+        <ItemDiv>
         {
             items.map(item => <CollectionItem key={item.id} item={item}/>)
         }
-        </div>
-    </div>
+        </ItemDiv>
+    </CollectionPageContainer>
     );
 }
 
