@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
-import {  PersistGate } from "redux-persist/integration/react"
+import { PersistGate } from "redux-persist/integration/react"
 
 import {store, persistor} from "./redux/store";
 
@@ -44,5 +44,8 @@ after creating the store we need to pass it into the provider so that provider c
 
 after passing it to store we need to create actions that will trigger the reducers to change the state hence re-render the neccessary components
 
+.
+.
+.
 
 */

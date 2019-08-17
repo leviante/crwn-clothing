@@ -44,7 +44,7 @@ export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => 
 
   const batch  = firestore.batch();
   objectsToAdd.forEach(obj => {
-    const newDocRef = collectionRef.doc(); //adds uid to created documentRefs
+    const newDocRef = collectionRef.doc(); //adds uid to created documentRefs, if the arg is empty
     batch.set(newDocRef, obj);
   });
 
@@ -71,6 +71,16 @@ export const convertCollectionsSnapshotToMap = collections => {
   }, {})
 }
 
+//saga update - new util function
+export const getCurrentUser = () => {
+  return new Promise((resolve, reject) => {
+    const unsubscribe = auth.onAuthStateChanged(userAuth => {
+      unsubscribe();
+      resolve(userAuth);
+    }, reject)
+  }) 
+}
+
 firebase.initializeApp(config);
 
 //required code for Google authentication
@@ -78,12 +88,12 @@ firebase.initializeApp(config);
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
 
-const provider = new firebase.auth.GoogleAuthProvider();
+export const googleProvider = new firebase.auth.GoogleAuthProvider();
 
-provider.setCustomParameters({
+googleProvider.setCustomParameters({
   prompt: "select_account" //fire off google popup whenever we want for auth sign in
 });
 
-export const signInWithGoogle = () => auth.signInWithPopup(provider);
+export const signInWithGoogle = () => auth.signInWithPopup(googleProvider);
 
 export default firebase;

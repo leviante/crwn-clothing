@@ -13,11 +13,16 @@ middleware that the store is expecting from redux is going to be an ARRAY - can 
 
 import { createStore, applyMiddleware } from "redux";
 import logger from "redux-logger";
+// import thunk from "redux-thunk"; not needed anymore, using sagas now
+import createSagaMiddleware from "redux-saga";
 import { persistStore } from "redux-persist";
 
 import rootReducer from "./root-reducer";
+import rootSaga from "./root.saga";
 
-const middlewares = [];
+const sagaMiddleware = createSagaMiddleware()
+
+const middlewares = [sagaMiddleware];
 
 if(process.env.NODE_ENV === "development"){
     middlewares.push(logger); //use the logger only in development mode
@@ -25,6 +30,7 @@ if(process.env.NODE_ENV === "development"){
 
 export const store = createStore(rootReducer, applyMiddleware(...middlewares)); //gets rootReducer and returnvalue of applyMiddleware(...middlewares);
 
+sagaMiddleware.run(rootSaga);
 
 /*
 Applying redux persist to save cart
@@ -32,4 +38,4 @@ create a new persisted version of the store by using persistStore();
 */
 export const persistor = persistStore(store);
 
-export default { store, persistor};
+export default {store, persistor};

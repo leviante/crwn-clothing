@@ -6,6 +6,8 @@ import { createStructuredSelector } from "reselect";
 
 import { selectCurrentUser } from "./redux/user/user.selectors";
 
+import { checkUserSession } from "./redux/user/user.actions";
+
 
 import HomePage from "./pages/homepage/homepage.component";
 import ShopPage from "./pages/shop/shop.component";
@@ -13,32 +15,35 @@ import SignInAndSignUpPage from "./pages/sign-in-and-sign-up/sign-in-and-sign-up
 import CheckoutPage from "./pages/checkout/checkout.component";
 
 import Header from "./components/header/header.component";
-import { setCurrentUser } from "./redux/user/user.actions";
+
 
 //import firebase stuff
-
-import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
 
 class App extends React.Component {
   unsubscribeFromAuth = null;
 
   componentDidMount() {
-    const { setCurrentUser } = this.props;
 
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(async user => {
-      if (user) {
-        const userRef = await createUserProfileDocument(user);
+    const { checkUserSession } = this.props;
 
-        userRef.onSnapshot(snapShot => {
-          setCurrentUser({
-            id: snapShot.id,
-            ...snapShot.data()
-          });
-        });
-      } else {
-        setCurrentUser(user);
-      }
-    });
+    checkUserSession();
+
+    //old observable pattern for user sign in
+
+    // this.unsubscribeFromAuth = auth.onAuthStateChanged(async user => {
+    //   if (user) {
+    //     const userRef = await createUserProfileDocument(user);
+
+    //     userRef.onSnapshot(snapShot => {
+    //       setCurrentUser({
+    //         id: snapShot.id,
+    //         ...snapShot.data()
+    //       });
+    //     });
+    //   } else {
+    //     setCurrentUser(user);
+    //   }
+    // });
   }
 
   componentWillUnmount() {
@@ -75,8 +80,9 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = dispatch => ({
-  setCurrentUser: user => dispatch(setCurrentUser(user))
+  checkUserSession: () => dispatch(checkUserSession())
 });
+
 
 export default connect(
   mapStateToProps,

@@ -2,16 +2,12 @@ import React from "react";
 import { Route } from "react-router-dom";
 import {connect} from "react-redux";
 
-import CollectionOverview from "../../components/collections-overview/collections-overview.component";
-import CollectionPage from "../collection/collection.component";
-import WithSpinner from "../../components/with-spinner/with-spinner.component";
+import CollectionsOverviewContainer from "../../components/collections-overview/collections-overview.container";
+import CollectionPageContainer from "../collection/collection.container";
 
-import { firestore, convertCollectionsSnapshotToMap } from "../../firebase/firebase.utils";
+// import { firestore, convertCollectionsSnapshotToMap } from "../../firebase/firebase.utils";
 
-import { updateCollections  } from "../../redux/shop/shop.actions";
-
-const CollectionsOverviewWithSpinner = WithSpinner(CollectionOverview);
-const CollectionPageWithSpinner = WithSpinner(CollectionPage);
+import { fetchCollectionsStart } from "../../redux/shop/shop.actions";
 
 class ShopPage extends React.Component {
   //if all we want to do is to set initial state, you don't need to call constructor and super
@@ -22,17 +18,20 @@ class ShopPage extends React.Component {
   unsubscribeFromSnapshot = null;
 
   componentDidMount(){
-    const { updateCollections } = this.props;
-    const collectionRef = firestore.collection("collections");
+    const { fetchCollectionsStart } = this.props;
+    fetchCollectionsStart();
 
-    // //makes a api call that fetch back the data associated to this collection
-    collectionRef.get().then(snapshot => {
-      const collectionsMap = convertCollectionsSnapshotToMap(snapshot);
-      updateCollections(collectionsMap);
-      this.setState({
-        loading:false
-      })
-    });
+    // const { updateCollections } = this.props;
+    // const collectionRef = firestore.collection("collections");
+
+    // // //makes a api call that fetch back the data associated to this collection
+    // collectionRef.get().then(snapshot => {
+    //   const collectionsMap = convertCollectionsSnapshotToMap(snapshot);
+    //   updateCollections(collectionsMap);
+    //   this.setState({
+    //     loading:false
+    //   })
+    // });
 
     //native fetch to grab data
     // fetch("https://firestore.googleapis.com/v1/projects/crwn-db-e1957/databases/(default)/documents/collections")
@@ -45,13 +44,12 @@ class ShopPage extends React.Component {
   render(){
 
     const {match} = this.props;
-    const {loading} = this.state;
     
     return (
-      <div className="shop">
-        <Route exact path={`${match.path}`} render={(props) => <CollectionsOverviewWithSpinner isLoading={loading} {...props}/>} />
+      <div className="shop-page">
+        <Route exact path={`${match.path}`} component={CollectionsOverviewContainer} />
         <Route 
-          path={`${match.path}/:collectionId`} render={(props) => <CollectionPageWithSpinner isLoading={loading} {...props}/>} 
+          path={`${match.path}/:collectionId`} component={CollectionPageContainer} 
         />
       </div>
         );
@@ -86,7 +84,7 @@ now we can chain on it using :categoryId
 
 
 const mapDispatchToProps = dispatch => ({
-  updateCollections: collectionsMap => dispatch(updateCollections(collectionsMap))
+  fetchCollectionsStart: () => dispatch(fetchCollectionsStart())
 });
 
 export default connect(null, mapDispatchToProps)(ShopPage);

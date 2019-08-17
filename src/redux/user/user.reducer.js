@@ -16,20 +16,38 @@ We want to make sure that our reducers are aware of what specific type of action
 payload = Not necessary, can be anything. Very flexible, can be used to change state
 
 */
-import { userActionTypes } from "../user/user.types";
+import userActionTypes from "../user/user.types";
 
 const INITIAL_STATE = {
-  currentUser: null
+  currentUser: null,
+  error: null
 };
 
 const userReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case userActionTypes.SET_CURRENT_USER:
+
+    case userActionTypes.SIGN_IN_SUCCESS:
+    case userActionTypes.SIGN_UP_SUCCESS:
       return {
         ...state,
-        currentUser: action.payload
+        currentUser: action.payload,
+        error:null //if user successfully logged in, clear any previous errors
+      };
+      
+    case userActionTypes.SIGN_OUT_SUCCESS:
+      return {
+        ...state,
+        currentUser: null,
+        error: null
       };
 
+    case userActionTypes.SIGN_IN_FAILURE:
+    case userActionTypes.SIGN_OUT_FAILURE:
+    case userActionTypes.SIGN_UP_FAILURE:
+      return {
+        ...state,
+        error: action.payload
+      }
     default:
       return state;
   }

@@ -4,11 +4,13 @@ import { createStructuredSelector } from "reselect";
 import { selectCurrentUser } from "../../redux/user/user.selectors";
 import { selectCartHidden } from "../../redux/cart/cart.selectors";
 
-import { auth } from "../../firebase/firebase.utils";
 import CartIcon from "../cart-icon/cart-icon.component";
 import CartDropdown from "../cart-dropdown/cart-dropdown.component";
 
 import { ReactComponent as Logo } from "../../assets/crown.svg";
+
+//saga update - import necessary actions
+import { SignOutStart } from "../../redux/user/user.actions";
 
 // import "./header.styles.scss";
 //import styled-components
@@ -24,7 +26,7 @@ Connect() is a higher-order component that lets us modify our component to have 
 
 
 */
-const Header = ({ currentUser, hidden }) => {
+const Header = ({ currentUser, hidden, SignOutStart }) => {
   return (
     <HeaderContainer>
       <LogoContainer to="/">
@@ -39,7 +41,7 @@ const Header = ({ currentUser, hidden }) => {
         </OptionLink>
 
         {currentUser ? (
-          <OptionLink as="div" onClick={() => auth.signOut()}>
+          <OptionLink as="div" onClick={SignOutStart}>
             SIGN OUT
           </OptionLink>
         ) : (
@@ -60,4 +62,9 @@ const mapStateToProps = createStructuredSelector({
   hidden: selectCartHidden
 });
 
-export default connect(mapStateToProps)(Header);
+//saga update
+const mapDispatchToProps = dispatch => ({
+  SignOutStart: () => dispatch(SignOutStart())
+});
+
+export default connect(mapStateToProps,mapDispatchToProps)(Header);
