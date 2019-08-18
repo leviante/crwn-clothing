@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
@@ -19,38 +19,37 @@ import Header from "./components/header/header.component";
 
 //import firebase stuff
 
-class App extends React.Component {
-  unsubscribeFromAuth = null;
+const App = ({ checkUserSession, currentUser }) => {
 
-  componentDidMount() {
-
-    const { checkUserSession } = this.props;
-
+  useEffect(()=>{
     checkUserSession();
+  }, [checkUserSession]); //using array because it's a function we get from mapDispatch
 
-    //old observable pattern for user sign in
+  // componentDidMount() {
 
-    // this.unsubscribeFromAuth = auth.onAuthStateChanged(async user => {
-    //   if (user) {
-    //     const userRef = await createUserProfileDocument(user);
+    
 
-    //     userRef.onSnapshot(snapShot => {
-    //       setCurrentUser({
-    //         id: snapShot.id,
-    //         ...snapShot.data()
-    //       });
-    //     });
-    //   } else {
-    //     setCurrentUser(user);
-    //   }
-    // });
-  }
+  //   checkUserSession();
 
-  componentWillUnmount() {
-    this.unsubscribeFromAuth();
-  }
+  //   //old observable pattern for user sign in
 
-  render() {
+  //   // this.unsubscribeFromAuth = auth.onAuthStateChanged(async user => {
+  //   //   if (user) {
+  //   //     const userRef = await createUserProfileDocument(user);
+
+  //   //     userRef.onSnapshot(snapShot => {
+  //   //       setCurrentUser({
+  //   //         id: snapShot.id,
+  //   //         ...snapShot.data()
+  //   //       });
+  //   //     });
+  //   //   } else {
+  //   //     setCurrentUser(user);
+  //   //   }
+  //   // });
+  // }
+
+
     return (
       <div>
         <Header />
@@ -62,7 +61,7 @@ class App extends React.Component {
             exact
             path="/signin"
             render={() =>
-              this.props.currentUser ? (
+              currentUser ? (
                 <Redirect to="/" />
               ) : (
                 <SignInAndSignUpPage />
@@ -73,7 +72,7 @@ class App extends React.Component {
       </div>
     );
   }
-}
+
 
 const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser,
