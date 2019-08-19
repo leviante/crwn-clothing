@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Route } from "react-router-dom";
 import {connect} from "react-redux";
 
@@ -9,41 +9,38 @@ import CollectionPageContainer from "../collection/collection.container";
 
 import { fetchCollectionsStart } from "../../redux/shop/shop.actions";
 
-class ShopPage extends React.Component {
-  //if all we want to do is to set initial state, you don't need to call constructor and super
-  state = {
-    loading: true
-  }
+const ShopPage = ({ fetchCollectionsStart, match }) => {
 
-  unsubscribeFromSnapshot = null;
-
-  componentDidMount(){
-    const { fetchCollectionsStart } = this.props;
+  
+  useEffect(() => {
     fetchCollectionsStart();
+  },[fetchCollectionsStart]);  //doing it to avoid the warning, because we are using a prop it says you should watch it, but it's the prop we get from mapDispatch, but hook doesn't know that so we just pass it in to ignore the warning, fetchCollectionsStart actually won't change at all.
 
-    // const { updateCollections } = this.props;
-    // const collectionRef = firestore.collection("collections");
+  // componentDidMount(){ pre Hooks code
 
-    // // //makes a api call that fetch back the data associated to this collection
-    // collectionRef.get().then(snapshot => {
-    //   const collectionsMap = convertCollectionsSnapshotToMap(snapshot);
-    //   updateCollections(collectionsMap);
-    //   this.setState({
-    //     loading:false
-    //   })
-    // });
+  //   fetchCollectionsStart();
 
-    //native fetch to grab data
-    // fetch("https://firestore.googleapis.com/v1/projects/crwn-db-e1957/databases/(default)/documents/collections")
-    // .then(response => response.json())
-    // .then(collections => console.log(collections));
+  //   // const { updateCollections } = this.props;
+  //   // const collectionRef = firestore.collection("collections");
+
+  //   // // //makes a api call that fetch back the data associated to this collection
+  //   // collectionRef.get().then(snapshot => {
+  //   //   const collectionsMap = convertCollectionsSnapshotToMap(snapshot);
+  //   //   updateCollections(collectionsMap);
+  //   //   this.setState({
+  //   //     loading:false
+  //   //   })
+  //   // });
+
+  //   //native fetch to grab data
+  //   // fetch("https://firestore.googleapis.com/v1/projects/crwn-db-e1957/databases/(default)/documents/collections")
+  //   // .then(response => response.json())
+  //   // .then(collections => console.log(collections));
     
     
-  }
+  // }
 
-  render(){
-
-    const {match} = this.props;
+ 
     
     return (
       <div className="shop-page">
@@ -54,8 +51,6 @@ class ShopPage extends React.Component {
       </div>
         );
   } 
-
-}
 
 /*
 Nested Routing
