@@ -11,12 +11,13 @@ const StripeCheckoutButton = ({price}) => {
     const publishableKey = "pk_test_lopMYRNzlpP9hnANmBXb4JNk00PP8jSvTQ";
 
     const onToken = token => {
+
         //old code
         // console.log(token);
         // alert("Payment Successful!");
 
         //pass token to backend, so make a post request
-        //axios is a function that takes an objects as an argument, and this object will contain properties that we want to pass in order for access to know what kind of request we're trying to make
+        //axios is a function that takes an objects as an argument, and this object will contain properties that we want to pass in order for axios to know what kind of request we're trying to make
         //returns a promise
         axios({
             url: "payment", //will use our current URL and appends "payment" at the end
