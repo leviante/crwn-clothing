@@ -16,7 +16,7 @@ import { connect } from "react-redux";
 //import styled-components
 import { SignInContainer, ButtonsContainer } from "./sign-in.styles";
 
-const SignIn = ({ emailSignInStart}) => {
+const SignIn = ({ emailSignInStart, googleSignInStart }) => {
   
   //initialize useState hooks
   const [userCredentials, setCredentials] = useState({email: "", password: ""});
