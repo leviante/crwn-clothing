@@ -7,7 +7,7 @@ import {selectCollectionsForPreview} from "../../redux/shop/shop.selectors";
 //import styled components
 import { CollectionsOverviewContainer } from "./collections-overview.styles";
 
-import CollectionPreview from "../preview-collection/collection-preview.component";
+import CollectionPreview from "../collection-preview/collection-preview.component";
 
 
 const CollectionsOverview = ({collections}) => {

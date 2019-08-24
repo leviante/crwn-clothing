@@ -8,6 +8,12 @@ export const HeaderContainer = styled.div`
     display: flex;
     justify-content: space-between;
     margin-bottom: 25px;
+
+    @media screen and (max-width: 800px){
+        height: 60px;
+        padding: 10px;
+        margin-bottom:20px;
+    }
 `;
 
 //We need a logo container as well, but it'll be link
@@ -17,6 +23,11 @@ export const LogoContainer = styled(Link)`
      height: 100%;
     width: 70px;
     padding: 25px;
+
+    @media screen and (max-width:800px){
+        width:50px;
+        padding:0;
+    }
 `;
 
 //Now, options container, it's a div element so we use this notation
@@ -26,6 +37,10 @@ export const OptionsContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: flex-end;
+
+    @media screen and (max-width: 800px){
+        width: 80%;
+    }
 `;
 
 

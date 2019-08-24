@@ -13,7 +13,7 @@ export const CheckoutItemContainer = styled.div`
 
 //img-container
 export const ImageContainer = styled.div`
-    width: 23%;
+    width: 20%;
     padding-right: 15px;
 
     img {
@@ -24,17 +24,33 @@ export const ImageContainer = styled.div`
 
 //name, quantity and price
 export const NameSpan = styled.span`
-    width: 23%;
+    width: 20%;
+    text-align: center;
+
+    @media screen and (max-width: 350px){
+        font-size: 18px;
+    }
 `;
 
 export const QuantitySpan = styled.span`
     display: flex;
-    padding-left: 20px;
-    width: 23%;    
+    justify-content: center;
+    width: 20%;
+
+
+    @media screen and (max-width: 350px){
+        font-size: 18px;
+        padding-left:10px;
+    } 
 `;
 
 export const PriceSpan = styled.span`
-    width: 23%; 
+    width: 20%;
+    text-align: center;
+
+    @media screen and (max-width: 350px){
+        font-size: 18px;
+    }
 `;
 
 //arrows and value
@@ -48,8 +64,9 @@ export const ValueSpan = styled.span`
 
 //remove-button
 export const RemoveButtonStyle = styled.div`
-    padding-left: 12px;
     cursor: pointer;
+    text-align:center;
+    width:20%;
 `;
 
 

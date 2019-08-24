@@ -45,6 +45,13 @@ export const CustomCollectionItemButton = styled(CustomButton)`
     position: absolute;
     top: 255px;
     display: none;
+
+    @media screen and (max-width: 800px){
+        display: block;
+        opacity: 0.9;
+        min-width: unset;
+        padding: 0px 10px;
+    }
 `;
 
 //collection-item div container
@@ -64,5 +71,13 @@ export const CollectionItemContainer = styled.div`
 
   ${CollectionPageContainer} &{
       margin-bottom:30px;
+  }
+
+  @media screen and (max-width: 800px){
+      width: 40vw;
+
+      &:hover ${CustomCollectionItemButton}{
+         opacity: unset;
+     }
   }
 `;

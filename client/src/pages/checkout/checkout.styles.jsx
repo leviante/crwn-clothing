@@ -7,11 +7,24 @@ export const CheckoutPageContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 50px auto 0;
+    margin: 50px auto;
 
     button{
     margin-left: auto;
     margin-top: 50px;
+  }
+
+  @media screen and (max-width: 400px){
+      width: 100%;
+      margin: 50px auto;
+  }
+
+  @media screen and (max-width: 800px){
+      width: 95%;
+  }
+
+  @media screen and (max-width: 1000px){
+      width: 80%;
   }
 `;
 
@@ -27,10 +40,11 @@ export const CheckoutHeaderDiv = styled.div`
 //header-block
 export const HeaderBlockDiv = styled.div`
     text-transform: capitalize;
-    width: 23%;
-
-    &:last-child {
-        width: 8%;
+    text-align: center;
+    width: 20%;
+    
+    @media screen and (max-width: 800px){
+        width:50%;
     }
 `;
 

@@ -69,4 +69,7 @@ export const MenuItemContainer = styled.div`
     opacity: 1;
   }
 
+  @media screen and (max-width: 800px){
+    height: 200px;
+  }
 `;
