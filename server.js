@@ -8,6 +8,9 @@ const bodyParser = require("body-parser");
 //allows us to dynamically build paths from our current directory to where we want to go
 const path = require("path");
 
+//implementing gzipping functionality for Heroku
+const compression = require("compression");
+
 if (process.env.NODE_ENV !== "production") require("dotenv").config();
 
 //call stripe library after this call ^. because stripe requires that secret key we put inside .env, and we can access it in here by using dotenv.
@@ -20,6 +23,9 @@ const app = express(); //instantiate a new express application
 
 //setup our application's port, use the value if process.env has one, otherwise use 5000
 const port = process.env.PORT || 5000;
+
+//initialize gzipping
+app.use(compression);
 
 //make sure that any of the requests coming in, process their body tag and convert to JSON so that we can use it
 app.use(bodyParser.json());
