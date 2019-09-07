@@ -3,6 +3,8 @@
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
+//for HTTPS redirecting
+const enforce = require("express-sslify");
 
 //path is a native module, let's us build out pathing for our directories
 //allows us to dynamically build paths from our current directory to where we want to go
@@ -37,6 +39,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //By using this we're enabling our front end to communicate with backend because they both have different origins (localhost:3000 vs localhost:5000)
 app.use(cors());
 
+//Setup HTTPS redirection so that when user requests with HTTP, our server will redirect as HTTPS
+//trust proto header is a config for Heroku
+app.use(enforce.HTTPS({ trustProtoHeader: true }));
+
 //serve our client application if it's production
 //
 if(process.env.NODE_ENV === "production"){
@@ -58,6 +64,10 @@ app.listen(port, error => {
     if(error) throw error;
     console.log("Server running on port " + port);
 }); 
+
+app.get("/service-worker.js", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "..", "build", "service-worker.js"));
+});
 
 //build payment route for stripe checkout
 app.post("/payment", (request, response) => {
